@@ -1,0 +1,50 @@
+body{
+    font-family: 'Roboto', sans-serif;
+	text-align: center;
+}
+.add-todo-form{
+	text-align: center;
+	margin-top: 1rem;
+    margin-bottom:6rem;
+}
+.to-do-input{
+	width: 30%;
+	text-align: end;
+}
+.todos{
+    margin-top:3rem;
+}
+.todo{
+	text-align: center;
+}
+.divider{
+    border-style:  none;
+	border-top-style: dotted;
+	border-color:#511281;
+	border-width: 7px;
+	width:70%;
+	padding: 10px;
+}
+header{
+    margin-bottom: 10rem;
+}
+.edit-form{
+    margin-top: 5vh;
+    text-align: center;
+    width: 40%;
+    margin-left: 22rem;
+}
+.completed-todo{
+    box-shadow: 1px 5px 5px 1px gray; 
+}
+.completed-todos{
+    margin-top: 3rem;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: auto auto auto ;
+    grid-column-gap: 0.9rem;
+    grid-row-gap: 1.4rem;
+}
+.show-todo-btn{
+    /*float: center*/;
+}
