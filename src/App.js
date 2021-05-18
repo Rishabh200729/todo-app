@@ -1,4 +1,3 @@
-// check the errors in the console
 import React, { useState, useEffect } from "react";
 import './App.css';
 import Todos from "./myComponents/Todos";
@@ -8,6 +7,7 @@ import AddTodo from "./myComponents/AddTodo";
 import About from "./myComponents/About";
 import Edit from "./myComponents/Edit";
 import CompletedTodos from "./myComponents/CompletedTodos";
+import Login from "./myComponents/Login";
 import{ 
     BrowserRouter as Router,
     Switch,
@@ -92,10 +92,6 @@ function App() {
         setCompletedTodos([...completedTodos,todoItem]);
         ref.doc(todoItem.id).delete();
         completedTodosref.add(todoItem);
-        //create a new collection inside firestore for completed todos
-        //delete the completedtodo from the todos array
-        //add the completedtodo to this new collection
-        //render them at /completed
     }
   	return (
   		<Container>
@@ -127,6 +123,12 @@ function App() {
               <Route path="/completed">
                 <CompletedTodos completedTodos={completedTodos} />
               </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+            <Route path="/logout">
+                <h1>Logout Route</h1>
+            </Route>
             </Switch>
             <Footer />
             </Router>
