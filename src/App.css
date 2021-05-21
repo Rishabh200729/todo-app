@@ -45,6 +45,9 @@ header{
     grid-column-gap: 0.9rem;
     grid-row-gap: 1.4rem;
 }
+.login-form {
+    padding:2rem;
+}
 .show-todo-btn{
     /*float: center*/;
 }
