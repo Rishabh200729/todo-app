@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
   if(pending){
     return <h3>Loading...</h3>
   }
-  console.log(currentUser);
   return (
     <AuthContext.Provider
       value={{

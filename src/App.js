@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import './App.css';
 import Header from "./myComponents/Header";
 import Footer from "./myComponents/Footer";
@@ -7,7 +7,7 @@ import CompletedTodos from "./myComponents/CompletedTodos";
 import Login from "./myComponents/Login";
 import SignUp from "./myComponents/SignUp";
 import Home from "./myComponents/Home";
-import { AuthProvider } from "./Auth";
+import { AuthContext ,AuthProvider  } from "./Auth";
 import  PrivateRoute from "./PrivateRoute";
 import{ 
     BrowserRouter as Router,
@@ -17,22 +17,35 @@ import{
 import { Container } from "@material-ui/core";
 import firebase from "./firebase";
 
-function App() {	
-  const [completedTodos , setCompletedTodos] = useState([]);
-  //reference of completedTodos collection in firestore
-  const completedTodosref = firebase.firestore().collection("completedTodos"); 
-  //get the completedTodos
-  useEffect(()=>{ 
-    completedTodosref.onSnapshot((querySnapshot)=>{
+function App() {
+  //get the logged in user
+  //const { currentUser } = React.useContext(AuthContext); shows error
+  const [todos, setTodos] = useState([]);
+  const [completedTodos, setCompletedTodos] = useState([]);
+
+  const ref = firebase.firestore().collection("todos");
+  const completedTodosref = firebase.firestore().collection("completedTodos");
+  //get the todos and completed Todos from firestore.  
+  useEffect(()=>{
+    ref.onSnapshot((querySnapshot)=>{
       const items = [];
       querySnapshot.forEach((doc)=>{
-          items.push({...doc.data(),id:doc.id});
+          items.push({...doc.data(),id : doc.id});
       });
-      console.table(items);
-      setCompletedTodos(items);
-    })
-  });
-  
+      //console.log(items);
+      setTodos(items);
+      //console.log("todos",todos);
+    });
+    completedTodosref.onSnapshot((querySnapshot)=>{
+      const data = [];
+        querySnapshot.forEach((doc)=>{
+            data.push({...doc.data(),id:doc.id});
+        });
+        setCompletedTodos(data);
+        //console.log("completed Todos are",completedTodos);
+     })
+  },[]);
+
   return (
     <AuthProvider>
       <Container>
@@ -41,8 +54,13 @@ function App() {
               title = "Todo List"
           />
           <Switch>
-            <PrivateRoute exact path="/" component={ Home } />
-            <Route exact path="/about">
+            <PrivateRoute exact path="/" component={ Home } 
+              completedTodos={completedTodos}
+              todos={todos}   
+              setTodos ={setTodos}
+              setCompletedTodos={setCompletedTodos}
+            />
+            <Route exact path="/about"> 
               <About />
             </Route>
             <PrivateRoute exact path="/completed">

@@ -18,7 +18,10 @@ const Header = (props) => {
 						<Link to="/about"  style={{"color":"#ffffff"}}><Tab label="ABOUT" ></Tab></Link>
 						<Link to="/completed"  style={{"color":"#ffffff"}}><Tab label="Completed Todos" ></Tab></Link>
 					</Tabs>
-					{currentUser ? <Button variant="contained" color="secondary" onClick={()=> firebase.auth().signOut()} >Log Out</Button>
+					{currentUser ?<> 
+						<Button variant="contained" color="secondary" onClick={()=> firebase.auth().signOut()} >Log Out</Button>
+						<Typography style={{"marginLeft":"0.5em"}} variant="h4">{currentUser.displayName ? currentUser.displayName : currentUser.email}</Typography>
+					</>
 					:
 					<Button variant="contained" color="secondary"><Link to="/login">Login</Link></Button>}
 				</Toolbar>

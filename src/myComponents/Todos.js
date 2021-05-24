@@ -6,13 +6,14 @@ import "../App.css";
 const Todos = (props) => {
 	return (
 		<div className="todos">
-		    <Typography variant="h3">Your Todos</Typography>{ props.todos.length ?  props.todos.map(todo=>{ 
+			<Typography variant="h3">Your Todos</Typography>
+			{ props.todos.length   ?  props.todos.map(todo=>{ 
 		    	return <TodoItem 
 		    		key={todo.id} 
 		    		todo={ todo } 
 					onEdit = {props.onEdit}
-		    		onComplete={props.onComplete} /> })
-		    :<h1>No todos to display </h1> } 
+		    		onComplete={props.onComplete} /> 
+			}):<h1>Add todo to get started</h1> } 
 		</div>
         
 	)

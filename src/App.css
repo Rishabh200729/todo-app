@@ -48,6 +48,10 @@ header{
 .login-form {
     padding:2rem;
 }
+.sign-up{
+    box-shadow:0px 0px 10px 7px gray ;
+    padding:2rem;
+}
 .show-todo-btn{
     /*float: center*/;
 }
