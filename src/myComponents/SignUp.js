@@ -15,7 +15,9 @@ const SignUp = ({ history }) => {
         .createUserWithEmailAndPassword(email.value, password.value).then(userCredential=>{
           usersRef.doc(userCredential.user.uid).set({
             name: name.value,
-            email: email.value
+            email: email.value,
+            todos:[],
+            completedTodos:[]
           })
         }) 
       history.push("/");

@@ -15,22 +15,29 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
     const [deadline, setDeadline] = useState("");
 
     const ref = firebase.firestore().collection("users");
-    const completedTodosref = firebase.firestore().collection("completedTodos");
-    
     //add a todo
 	const addTodo = (title,desc, deadline) =>{
         const createdAt = firebase.firestore.Timestamp.fromDate(new Date());
         const date = createdAt.toDate();
+        //giev todos their unique serial number
+        let sno = 0;
+        if(todos.length){
+            const lastTodoSno = todos[todos.length -1].sno;
+            sno = lastTodoSno + 1
+        }else{
+            sno = 1;
+        }
 		const newTodo = {
+            sno:sno,
             timestamp:date,
 			title,
             desc,
             deadline,
-            completed : false
+            completed : false,
 		}
         ref.doc(currentUser.uid).update(
             { todos: firebase.firestore.FieldValue.arrayUnion(newTodo)} //arrayUnion is just like push in js
-        )
+        );
     } 
     //this is going to run when edit button is clicked on the todo compoenent
     const onEdit = (todo)=>{
@@ -47,10 +54,23 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
           return todo.title === previousTitle
         })
         const [previousTodo] = previousTodoArray;
-        ref
-            .doc(previousTodo.id)
-            .update({title,desc,deadline});
-        setShowEdit(false);
+        //update the todo
+        ref.doc(currentUser.uid).get().then((doc)=>{
+            //get the present user Todos
+            let userTodos = doc.data().todos;
+            //the object the user wants to update
+            let objectToUpdate = userTodos[previousTodo.sno - 1];
+            //set all the fields which need to be updated
+            objectToUpdate.title = title;
+            objectToUpdate.desc= desc;
+            objectToUpdate.deadline = deadline;
+            //update the entire todos array and set it to the updated Array
+            ref.doc(currentUser.uid).update({
+                todos : userTodos
+            });
+            //after that set the showEdit to false
+            setShowEdit(false);
+        })        
     }
     
     //when completed button on todoItem is clicked.
@@ -62,8 +82,23 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
         setTodos(updatedTodos);
         todoItem.completed = true;
         setCompletedTodos([...completedTodos,todoItem]);
-        ref.doc(todoItem.id).delete();
-        completedTodosref.add(todoItem); 
+        ref.doc(currentUser.uid).get().then((doc)=>{
+            //get the present user Todos
+            let userTodos = doc.data().todos;
+            //the object the user wants to update
+            let updatedTodos = userTodos.filter((todo)=>{
+                return todo.sno !== todoItem.sno
+            });
+            userTodos = updatedTodos;
+            //update the entire todos array and set it to the updated Array
+            ref.doc(currentUser.uid).update({
+                todos : userTodos
+            });
+            ref.doc(currentUser.uid).update(
+                { completedTodos: firebase.firestore.FieldValue.arrayUnion(todoItem)} 
+            );
+        })
+        
     }
     
     return (

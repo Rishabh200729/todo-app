@@ -19,35 +19,22 @@ import firebase from "./firebase";
 
 function App() {
   //get the logged in user
-  //const { currentUser } = React.useContext(AuthContext); shows error
+  const { currentUser } = React.useContext(AuthContext); 
   const [todos, setTodos] = useState([]);
   const [completedTodos, setCompletedTodos] = useState([]);
 
-  const ref = firebase.firestore().collection("todos");
-  const completedTodosref = firebase.firestore().collection("completedTodos");
+  const ref = firebase.firestore().collection("users");
   //get the todos and completed Todos from firestore.  
   useEffect(()=>{
-    ref.onSnapshot((querySnapshot)=>{
-      const items = [];
-      querySnapshot.forEach((doc)=>{
-          items.push({...doc.data(),id : doc.id});
-      });
-      //console.log(items);
-      setTodos(items);
-      //console.log("todos",todos);
-    });
-    completedTodosref.onSnapshot((querySnapshot)=>{
-      const data = [];
-        querySnapshot.forEach((doc)=>{
-            data.push({...doc.data(),id:doc.id});
-        });
-        setCompletedTodos(data);
-        //console.log("completed Todos are",completedTodos);
-     })
+    if(currentUser){
+      ref.doc(currentUser.uid).onSnapshot((doc) => {
+          setTodos(doc.data().todos);
+          setCompletedTodos(doc.data().completedTodos);
+      }); 
+    }
   },[]);
 
   return (
-    <AuthProvider>
       <Container>
         <Router>
           <Header  
@@ -76,7 +63,6 @@ function App() {
           <Footer />
         </Router>
       </Container>
-    </AuthProvider>
   	)
 }
 

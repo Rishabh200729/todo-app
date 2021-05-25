@@ -20,7 +20,7 @@ const AddTodo = (props) => {
 		    setTitle("");
             setDesc("");  
             setDeadLine("");
-        
+        	setShowTodo(false);
         }
 	}
 
