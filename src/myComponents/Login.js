@@ -27,7 +27,7 @@ const Login = ({ history }) => {
   if (currentUser) {
     return <Redirect to="/" />;
   }
-  const formStyle = { 
+  const formStyle = {
    "-webkit-box-shadow": "0 0 10px 2px gray",
     "box-shadow": "0 0 5px 2px black",
   }

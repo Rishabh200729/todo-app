@@ -9,7 +9,8 @@ import SignUp from "./myComponents/SignUp";
 import Home from "./myComponents/Home";
 import { AuthContext ,AuthProvider  } from "./Auth";
 import  PrivateRoute from "./PrivateRoute";
-import{ 
+import Profile from "./myComponents/Profile";
+import{
     BrowserRouter as Router,
     Switch,
     Route,
@@ -19,35 +20,36 @@ import firebase from "./firebase";
 
 function App() {
   //get the logged in user
-  const { currentUser } = React.useContext(AuthContext); 
+  const { currentUser } = React.useContext(AuthContext);
   const [todos, setTodos] = useState([]);
   const [completedTodos, setCompletedTodos] = useState([]);
+  const [ data, setData ] = useState([]);
 
   const ref = firebase.firestore().collection("users");
-  //get the todos and completed Todos from firestore.  
+  //get the todos and completed Todos from firestore.
   useEffect(()=>{
-    if(currentUser){
+    if(currentUser !== undefined && currentUser !== null){
       ref.doc(currentUser.uid).onSnapshot((doc) => {
-          setTodos(doc.data().todos);
-          setCompletedTodos(doc.data().completedTodos);
-      }); 
+          setData(doc.data());
+          const { todos, completedTodos } = doc.data();
+           setTodos(doc.data().todos);
+           setCompletedTodos(doc.data().completedTodos);
+      });
     }
   },[]);
-
   return (
-      <Container>
         <Router>
-          <Header  
+          <Header
               title = "Todo List"
           />
           <Switch>
-            <PrivateRoute exact path="/" component={ Home } 
+            <PrivateRoute exact path="/" component={ Home }
               completedTodos={completedTodos}
-              todos={todos}   
+              todos={todos}
               setTodos ={setTodos}
               setCompletedTodos={setCompletedTodos}
             />
-            <Route exact path="/about"> 
+            <Route exact path="/about">
               <About />
             </Route>
             <PrivateRoute exact path="/completed">
@@ -59,10 +61,15 @@ function App() {
             <Route path="/signup">
               <SignUp />
             </Route>
+            <PrivateRoute exact path="/profile">
+              <Profile
+                currentUser = {currentUser}
+                user = { data }
+              />
+            </PrivateRoute>
           </Switch>
           <Footer />
         </Router>
-      </Container>
   	)
 }
 

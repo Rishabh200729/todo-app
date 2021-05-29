@@ -1,5 +1,5 @@
 body{
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 	text-align: center;
 }
 .add-todo-form{
@@ -15,7 +15,11 @@ body{
     margin-top:3rem;
 }
 .todo{
+  box-shadow: 0px 0px 10px  gray ;
 	text-align: center;
+  width:47%;
+  margin: 1em;
+  display: inline-block;
 }
 .divider{
     border-style:  none;
@@ -35,7 +39,7 @@ header{
     margin-left: 22rem;
 }
 .completed-todo{
-    box-shadow: 1px 5px 5px 1px gray; 
+    box-shadow: 1px 5px 5px 1px gray;
 }
 .completed-todos{
     margin-top: 3rem;
@@ -52,6 +56,18 @@ header{
     box-shadow:0px 0px 10px 7px gray ;
     padding:2rem;
 }
-.show-todo-btn{
-    /*float: center*/;
+.profile {
+  box-shadow:0px 0px 0.5em 0.2em gray;
+  margin-left: 11em;
+  width : 70%;
+  padding: 2em 3em ;
+}
+.profile-btn{
+    margin-left: 22em;
+}
+.profile-img{
+    border-radius: 50%;
+}
+.todo-percent{
+  margin-bottom: 1em ;
 }

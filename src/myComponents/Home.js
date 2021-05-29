@@ -1,12 +1,13 @@
 import React,{ useState, useContext } from "react";
+import { Typography } from "@material-ui/core";
 import AddTodo from "./AddTodo";
 import Edit from "./Edit";
 import Todos from "./Todos";
 import firebase from "../firebase";
 import {  AuthContext } from "../Auth";
 
-const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{  
-    //the logged in user 
+const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
+    //the logged in user
     const { currentUser } = useContext(AuthContext);
     //show edit component using booleans
     const [showEdit , setShowEdit] = useState(false);
@@ -38,15 +39,15 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
         ref.doc(currentUser.uid).update(
             { todos: firebase.firestore.FieldValue.arrayUnion(newTodo)} //arrayUnion is just like push in js
         );
-    } 
+    }
     //this is going to run when edit button is clicked on the todo compoenent
     const onEdit = (todo)=>{
         setEditTitle(todo.title);
         setEditDesc(todo.desc);
         setDeadline(todo.deadline);
-        setShowEdit(!showEdit); 
+        setShowEdit(!showEdit);
     }
-    
+
     //update the task in the toodos state and the todos collection
     const editTask = (title, desc ,deadline , previousTitle) =>{
         //get the todo which  user is currently editing
@@ -70,9 +71,9 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
             });
             //after that set the showEdit to false
             setShowEdit(false);
-        })        
+        })
     }
-    
+
     //when completed button on todoItem is clicked.
     const todoComplete = (todoItem)=>{
         //delete the todo from the todos array
@@ -95,16 +96,17 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
                 todos : userTodos
             });
             ref.doc(currentUser.uid).update(
-                { completedTodos: firebase.firestore.FieldValue.arrayUnion(todoItem)} 
+                { completedTodos: firebase.firestore.FieldValue.arrayUnion(todoItem)}
             );
         })
-        
+
     }
-    
+
     return (
         <>
+        <Typography variant="h4" color="primary" style={{ "marginBottom" : "1em" }}>Active Todos : {todos.length} C'mon Hurry Up !! You can Do it </Typography>
         <AddTodo addTodo={addTodo} />
-            { showEdit && <Edit 
+            { showEdit && <Edit
                 title = {editTitle}
                 desc =  {editDesc}
                 deadline = {deadline}
@@ -115,6 +117,6 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
         /> }
         <Todos todos={todos} onEdit={onEdit} onComplete={todoComplete} />
         </>
-    )    
+    )
 }
 export default Home

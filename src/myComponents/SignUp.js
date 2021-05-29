@@ -1,10 +1,12 @@
 import React, { useCallback } from "react";
 import { withRouter } from "react-router";
 import firebase from "../firebase";
+import SignInWithGoogle from "../GoogleSignIn"
 import { Button, Typography, TextField, Container } from "@material-ui/core";
 import "../App.css";
 
 const SignUp = ({ history }) => {
+
   const handleSignUp = useCallback(async event => {
     event.preventDefault();
     const { email, password, name } = event.target.elements; 
@@ -27,17 +29,28 @@ const SignUp = ({ history }) => {
     
   }, [history]);
 
+  const SocialMediaSignUp = useCallback(async e => {
+      SignInWithGoogle();
+      history.push("/");
+  }, [history]);
+
+  const formStyle = { 
+   "-webkit-box-shadow": "0 0 10px 2px gray",
+    "box-shadow": "0 0 5px 2px black",
+  }
+
   return (
-    <Container className="sign-up" >
-      <Typography variant="h3" >Sign up</Typography>
+    <Container className="login-form" style={formStyle}>
+      <Typography variant="h3">Sign Up</Typography>
       <form onSubmit={handleSignUp}>
-        <TextField required name="email" maxWidth="true" margin="dense" type="email" placeholder="Email" label="Email" variant="outlined" />
-        <br />
-        <TextField required name="password" type="password"  placeholder="Password" label="Password" variant="outlined"  margin="dense" />
-        <br />
-        <TextField name="name" variant="outlined" label="Name" placeholder="Name" margin="dense" required type="text"/> 
-        <Button variant="contained" color="primary" type="submit">Sign Up</Button>
+        <TextField className="login-email" fullWidth="true" margin="normal" label="Email" required name="email" variant="outlined" type="email" placeholder="Email" />
+        <TextField required fullWidth="true" margin="normal" label="Password" variant="outlined" name="password" type="password" placeholder="Password" />
+        <TextField required fullWidth="true" margin="normal" label="Name" variant="outlined" name="name" type="text" placeholder="Name" />
+        <Button type="submit" color="primary" variant="contained" style={{"padding":"0.7em 20em 0.7em"}} >Sign Up</Button>
       </form>
+      <div style={{"marginTop":"1rem"}}>
+        <Button type="submit" color="secondary" variant="outlined" onClick={SocialMediaSignUp}>Sign In WITH Google</Button>
+      </div>
     </Container>
   );
 };
