@@ -29,9 +29,9 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
             sno = 1;
         }
 		const newTodo = {
-            sno:sno,
+            sno,
             timestamp:date,
-			title,
+			      title,
             desc,
             deadline,
             completed : false,
@@ -104,7 +104,7 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
 
     return (
         <>
-        <Typography variant="h4" color="primary" style={{ "marginBottom" : "1em" }}>Active Todos : {todos.length} C'mon Hurry Up !! You can Do it </Typography>
+        {todos.length > 0 && <Typography variant="h4" color="primary" style={{ "marginBottom" : "1em" }}>Todos : {todos.length} C'mon Hurry Up !! You can Do it </Typography>}
         <AddTodo addTodo={addTodo} />
             { showEdit && <Edit
                 title = {editTitle}
