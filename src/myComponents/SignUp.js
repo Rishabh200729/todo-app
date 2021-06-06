@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { withRouter } from "react-router";
 import firebase from "../firebase";
-import SignInWithGoogle from "../GoogleSignIn"
 import { Button, Typography, TextField, Container } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import "../App.css";
@@ -30,11 +29,6 @@ const SignUp = ({ history }) => {
 
   }, [history]);
 
-  const SocialMediaSignUp = useCallback(async e => {
-      SignInWithGoogle();
-      history.push("/");
-  }, [history]);
-
   const formStyle = {
    "-webkit-box-shadow": "0 0 10px 2px gray",
     "box-shadow": "0 0 5px 2px black",
@@ -42,7 +36,7 @@ const SignUp = ({ history }) => {
 
   return (
     <Container className="login-form" style={formStyle}>
-      <Typography variant="h3">Sign Up</Typography>
+      <Typography variant="h3">Register</Typography>
       { errors.length > 0 && <Alert severity="error">
         <AlertTitle>Error Signing In</AlertTitle>
         <strong> { errors } </strong>
@@ -54,9 +48,6 @@ const SignUp = ({ history }) => {
         <TextField required fullWidth="true" margin="normal" label="Name" variant="outlined" name="name" type="text" placeholder="Name" />
         <Button type="submit" color="primary" variant="contained" style={{"padding":"0.7em 20em 0.7em"}} >Sign Up</Button>
       </form>
-      <div style={{"marginTop":"1rem"}}>
-        <Button type="submit" color="secondary" variant="outlined" onClick={SocialMediaSignUp}>Sign In WITH Google</Button>
-      </div>
     </Container>
   );
 };

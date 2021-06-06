@@ -10,7 +10,7 @@ const Edit = (props) => {
 
   const submit = (e) => {
     e.preventDefault();
-    props.editTask(props.title,props.desc,props.deadline,title, desc, deadline);
+    props.editTask(props.title,props.desc,props.deadline,title);
   }
   return (
     <Container>

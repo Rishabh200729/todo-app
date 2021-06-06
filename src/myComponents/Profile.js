@@ -4,7 +4,6 @@ import { AuthContext } from "../Auth";
 import firebase from "../firebase";
 
 const Profile = (props) =>{
-  //reference to the logged in user from firestore
   const ref = firebase.firestore().collection("users");
   //state to store user data in db
   const [ userData, setUserData ] = useState([]);
@@ -13,9 +12,10 @@ const Profile = (props) =>{
     useEffect(()=>{
       if(props.currentUser){
         ref.doc(props.currentUser.uid).onSnapshot((doc) => {
+          console.log("log from profile page ",doc.data());
            setUserData(doc.data());
            if(doc.data().todos.length > 0 && doc.data().completedTodos.length > 0){
-             setPercent((((doc.data().todos.length) / (doc.data().todos.length + doc.data().completedTodos.length)) *100).toFixed(2) + " %");
+             setPercent((((doc.data().completedTodos.length) / (doc.data().todos.length + doc.data().completedTodos.length)) *100).toFixed(2) + " %");
            }
       });
     }

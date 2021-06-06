@@ -6,11 +6,11 @@ import "../App.css";
 const Todos = (props) => {
 	return (
 		<div className="todos">
-			{ props.todos.length   ?  props.todos.map(todo=>{ 
+			{ props.todos.length   ?  props.todos.map(todo=>{
 		    	return <TodoItem
 		    		key={todo.id}
 		    		todo={ todo }
-					onEdit = {props.onEdit}
+						onEdit = {props.onEdit}
 		    		onComplete={props.onComplete} />
 			}):<h1>Add todo to get started</h1> }
 		</div>
