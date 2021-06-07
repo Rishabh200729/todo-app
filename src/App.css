@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
 body{
-  font-family: 'Roboto', sans-serif;
-	text-align: center;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
 }
 .add-todo-form{
 	text-align: center;
@@ -15,11 +16,11 @@ body{
     margin-top:3rem;
 }
 .todo{
-  box-shadow: 0px 0px 10px  gray ;
-	text-align: center;
-  width:47%;
-  margin: 1em;
-  display: inline-block;
+    box-shadow: 0px 0px 10px  gray ;
+    text-align: center;
+    width:47%;
+    margin: 1em;
+    display: inline-block;
 }
 .divider{
     border-style:  none;

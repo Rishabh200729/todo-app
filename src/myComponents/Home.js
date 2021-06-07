@@ -67,7 +67,6 @@ const Home = ({todos, setTodos, completedTodos, setCompletedTodos}) =>{
                 let objectToUpdate = userTodos.filter((todoItem)=>{
                     return todoItem.sno === previousTodo.sno
                 });
-                console.log(objectToUpdate)
                 //set all the fields which need to be updated
                     objectToUpdate[0].title = title;
                     objectToUpdate[0].desc= desc;

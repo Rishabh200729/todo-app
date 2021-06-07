@@ -24,13 +24,12 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [completedTodos, setCompletedTodos] = useState([]);
   const [ data, setData ] = useState([]);
-
+  
   const ref = firebase.firestore().collection("users");
   //get the todos and completed Todos from firestore.
   useEffect(()=>{
     if(currentUser !== undefined && currentUser !== null){
       ref.doc(currentUser.uid).onSnapshot((doc) => {
-        console.log(doc.data());
           setData(doc.data());
           const { todos, completedTodos } = doc.data();
            setTodos(doc.data().todos);

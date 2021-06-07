@@ -12,7 +12,6 @@ const Profile = (props) =>{
     useEffect(()=>{
       if(props.currentUser){
         ref.doc(props.currentUser.uid).onSnapshot((doc) => {
-          console.log("log from profile page ",doc.data());
            setUserData(doc.data());
            if(doc.data().todos.length > 0 && doc.data().completedTodos.length > 0){
              setPercent((((doc.data().completedTodos.length) / (doc.data().todos.length + doc.data().completedTodos.length)) *100).toFixed(2) + " %");
